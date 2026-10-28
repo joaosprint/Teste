@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página de Teste</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --text: #1f2328;
+      --muted: #656d76;
+      --accent: #2f6feb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --card: #161b22;
+        --text: #e6edf3;
+        --muted: #8d96a0;
+        --accent: #4493f8;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    main {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    h1 { margin: 0 0 8px; font-size: 1.75rem; }
+    p { margin: 0 0 24px; color: var(--muted); line-height: 1.5; }
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.1); }
+    #contador { margin-top: 16px; font-size: 1.25rem; font-weight: 600; }
+    footer { margin-top: 24px; font-size: 0.85rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Página de Teste</h1>
+    <p>Se você está vendo esta página, o repositório <strong>Teste</strong> está funcionando.</p>
+    <button id="botao" type="button">Clique aqui</button>
+    <div id="contador">Cliques: 0</div>
+    <footer>Aberta em <span id="data"></span></footer>
+  </main>
+  <script>
+    let cliques = 0;
+    const contador = document.getElementById("contador");
+    document.getElementById("botao").addEventListener("click", () => {
+      cliques++;
+      contador.textContent = "Cliques: " + cliques;
+    });
+    document.getElementById("data").textContent = new Date().toLocaleString("pt-BR");
+  </script>
+</body>
+</html>
