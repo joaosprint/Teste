@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar</title>
+  <style>
+    :root {
+      --red-50: #fff1f1;
+      --red-100: #ffe0e0;
+      --red-200: #ffc7c7;
+      --red-300: #ffa0a0;
+      --red-400: #ff6b6b;
+      --red-500: #f43f3f;
+      --red-600: #e11d2e;
+      --red-700: #bc1324;
+      --red-800: #9b1424;
+      --red-900: #7f1624;
+      --red-950: #450a12;
+
+      --bg: var(--red-50);
+      --surface: #ffffff;
+      --text: var(--red-950);
+      --muted: var(--red-800);
+      --border: var(--red-200);
+      --accent: var(--red-600);
+      --accent-hover: var(--red-700);
+      --on-accent: #ffffff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a0508;
+        --surface: #2b0b10;
+        --text: var(--red-50);
+        --muted: var(--red-300);
+        --border: var(--red-900);
+        --accent: var(--red-500);
+        --accent-hover: var(--red-400);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+    }
+
+    /* Painel decorativo */
+    .brand {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px;
+      color: #fff;
+      background: linear-gradient(145deg, var(--red-500), var(--red-800) 55%, var(--red-950));
+    }
+    .brand::before, .brand::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .brand::before { width: 420px; height: 420px; right: -140px; top: -120px; }
+    .brand::after { width: 300px; height: 300px; left: -100px; bottom: -80px; }
+    .brand > * { position: relative; z-index: 1; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; color: #fff; text-decoration: none; }
+    .logo::before {
+      content: "";
+      width: 14px; height: 14px;
+      border-radius: 4px;
+      background: #fff;
+      transform: rotate(45deg);
+    }
+    .brand h2 { margin: 0 0 12px; font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.15; letter-spacing: -0.03em; }
+    .brand p { margin: 0; max-width: 380px; opacity: 0.85; }
+    .brand small { opacity: 0.7; }
+
+    /* Formulário */
+    .panel { display: grid; place-items: center; padding: 32px 16px; }
+    .box { width: 100%; max-width: 380px; }
+    .box h1 { margin: 0 0 6px; font-size: 1.9rem; letter-spacing: -0.03em; }
+    .box > p { margin: 0 0 28px; color: var(--muted); }
+
+    .field { margin-bottom: 18px; }
+    label { display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 600; }
+    .input-wrap { position: relative; }
+    input[type="email"], input[type="password"], input[type="text"] {
+      width: 100%;
+      padding: 12px 14px;
+      font: inherit;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input::placeholder { color: color-mix(in srgb, var(--muted) 60%, transparent); }
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+    input[aria-invalid="true"] { border-color: var(--red-600); }
+    .input-wrap input { padding-right: 70px; }
+    .toggle {
+      position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+      border: 0; background: none; padding: 6px 10px;
+      font: inherit; font-size: 0.8rem; font-weight: 600;
+      color: var(--accent); cursor: pointer; border-radius: 6px;
+    }
+    .toggle:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+    .error { margin: 6px 0 0; min-height: 1.2em; font-size: 0.82rem; color: var(--red-600); }
+    @media (prefers-color-scheme: dark) { .error { color: var(--red-400); } }
+
+    .row { display: flex; align-items: center; justify-content: space-between; margin: 4px 0 24px; font-size: 0.9rem; }
+    .check { display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--muted); }
+    .check input { accent-color: var(--accent); width: 16px; height: 16px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 24px;
+      font: inherit;
+      font-weight: 700;
+      color: var(--on-accent);
+      background: var(--accent);
+      box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 35%, transparent);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:active { transform: translateY(1px); }
+
+    .status {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      background: var(--red-100);
+      color: var(--red-900);
+      border: 1px solid var(--red-200);
+    }
+    @media (prefers-color-scheme: dark) {
+      .status { background: var(--red-950); color: var(--red-100); border-color: var(--red-900); }
+    }
+    .status[hidden] { display: none; }
+    .box > .foot { margin: 24px 0 0; text-align: center; font-size: 0.9rem; color: var(--muted); }
+
+    @media (max-width: 800px) {
+      body { grid-template-columns: 1fr; }
+      .brand { padding: 28px 24px; min-height: 0; gap: 24px; }
+      .brand p, .brand small { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <aside class="brand">
+    <a class="logo" href="index.html">Teste</a>
+    <div>
+      <h2>Bem-vindo de volta</h2>
+      <p>Entre para continuar de onde parou.</p>
+    </div>
+    <small>Tela de demonstração</small>
+  </aside>
+
+  <main class="panel">
+    <div class="box">
+      <h1>Entrar</h1>
+      <p>Use seu e-mail e senha para acessar sua conta.</p>
+
+      <form id="form" novalidate>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" required>
+          <div class="error" id="erro-email" role="alert"></div>
+        </div>
+
+        <div class="field">
+          <label for="senha">Senha</label>
+          <div class="input-wrap">
+            <input id="senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha" required>
+            <button class="toggle" id="toggle" type="button" aria-label="Mostrar senha">Mostrar</button>
+          </div>
+          <div class="error" id="erro-senha" role="alert"></div>
+        </div>
+
+        <div class="row">
+          <label class="check"><input type="checkbox" id="lembrar"> Lembrar de mim</label>
+          <a href="#" id="esqueci">Esqueci a senha</a>
+        </div>
+
+        <button class="btn" type="submit">Entrar</button>
+        <div class="status" id="status" role="status" hidden></div>
+      </form>
+
+      <p class="foot">Não tem conta? <a href="#" id="criar">Criar conta</a></p>
+    </div>
+  </main>
+
+  <script>
+    // Tela de demonstração: valida os campos no navegador e não envia dados a lugar nenhum.
+    const form = document.getElementById("form");
+    const email = document.getElementById("email");
+    const senha = document.getElementById("senha");
+    const status = document.getElementById("status");
+
+    function erro(campo, id, msg) {
+      document.getElementById(id).textContent = msg;
+      campo.setAttribute("aria-invalid", msg ? "true" : "false");
+      return !msg;
+    }
+
+    function mostrar(msg) {
+      status.textContent = msg;
+      status.hidden = false;
+    }
+
+    document.getElementById("toggle").addEventListener("click", (e) => {
+      const oculta = senha.type === "password";
+      senha.type = oculta ? "text" : "password";
+      e.target.textContent = oculta ? "Ocultar" : "Mostrar";
+      e.target.setAttribute("aria-label", oculta ? "Ocultar senha" : "Mostrar senha");
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      status.hidden = true;
+      const okEmail = erro(
+        email, "erro-email",
+        !email.value.trim() ? "Informe seu e-mail."
+          : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value) ? "E-mail inválido." : ""
+      );
+      const okSenha = erro(
+        senha, "erro-senha",
+        !senha.value ? "Informe sua senha."
+          : senha.value.length < 6 ? "A senha deve ter ao menos 6 caracteres." : ""
+      );
+      if (okEmail && okSenha) {
+        mostrar("Validação concluída. Esta é uma tela de demonstração: nenhum dado foi enviado.");
+      } else {
+        (okEmail ? senha : email).focus();
+      }
+    });
+
+    email.addEventListener("input", () => erro(email, "erro-email", ""));
+    senha.addEventListener("input", () => erro(senha, "erro-senha", ""));
+
+    document.getElementById("esqueci").addEventListener("click", (e) => {
+      e.preventDefault();
+      mostrar("Recuperação de senha não está disponível na demonstração.");
+    });
+    document.getElementById("criar").addEventListener("click", (e) => {
+      e.preventDefault();
+      mostrar("Criação de conta não está disponível na demonstração.");
+    });
+  </script>
+</body>
+</html>
